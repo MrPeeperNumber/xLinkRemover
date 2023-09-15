@@ -1,7 +1,7 @@
 {
   "name": "xlinkbot",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Telegram bot that removes the \"x\" from \"x.com\" links, and changes them to be Twitter, VxTwitter, and FxTwitter links ",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
