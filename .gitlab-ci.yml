@@ -28,7 +28,7 @@ deploy-prod:
     DOCKER_TLS_CERTDIR: ""
   before_script:
     - docker info
-    - echo "$DOCKER_REGISTRY_PASS" | docker login $DOCKER_REGISTRY --username $DOCKER_REGISTRY_USER --password-stdin
+    - echo "$DOCKER_REGISTRY_PASS" | docker login --username $DOCKER_REGISTRY_USER --password-stdin
   script:
     - docker build -t mrpeepernumber/nomorexbot .
     - docker push mrpeepernumber/nomorexbot
