@@ -8,14 +8,13 @@ build-job:
   cache:
     key: node-modules
     untracked: true
-    policy: push
 
 test:
   stage: test
   script:
     - npm run test
   cache:
-    key: node-modules
+    key: node-modules-protected
     policy: pull
 
 desploy-prod:
