@@ -5,11 +5,18 @@ build-job:
   stage: build
   script:
     - npm install
+  cache:
+    key: node-modules
+    untracked: true
+    policy: push
 
 test:
   stage: test
   script:
     - npm run test
+  cache:
+    key: node-modules
+    policy: pull
 
 desploy-prod:
   stage: deploy
