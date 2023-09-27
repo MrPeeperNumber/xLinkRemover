@@ -18,8 +18,17 @@ test:
     untracked: true
     policy: pull
 
-desploy-prod:
+deploy-prod:
+  image: docker:24.0.6
+  services:
+    - docker:24.0.6-dind
   stage: deploy
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - docker info
+    - echo "$DOCKER_REGISTRY_PASS" | docker login $DOCKER_REGISTRY --username $DOCKER_REGISTRY_USER --password-stdin
   script:
     - docker build -t mrpeepernumber/nomorexbot .
     - docker push
