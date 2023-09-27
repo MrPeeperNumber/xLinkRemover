@@ -14,7 +14,8 @@ test:
   script:
     - npm run test
   cache:
-    key: node-modules-protected
+    key: node-modules
+    untracked: true
     policy: pull
 
 desploy-prod:
