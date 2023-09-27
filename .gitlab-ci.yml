@@ -1,0 +1,15 @@
+build-job:
+  stage: build
+  script:
+    - npm install
+
+test:
+  stage: test
+  script:
+    - npm run test
+
+desploy-prod:
+  stage: deploy
+  script:
+    - docker build -t mrpeepernumber/nomorexbot .
+    - docker push
