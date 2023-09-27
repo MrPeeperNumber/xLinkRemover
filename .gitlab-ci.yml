@@ -31,4 +31,4 @@ deploy-prod:
     - echo "$DOCKER_REGISTRY_PASS" | docker login $DOCKER_REGISTRY --username $DOCKER_REGISTRY_USER --password-stdin
   script:
     - docker build -t mrpeepernumber/nomorexbot .
-    - docker push
+    - docker push mrpeepernumber/normorexbot
