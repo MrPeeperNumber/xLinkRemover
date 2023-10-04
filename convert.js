@@ -50,9 +50,9 @@ const handleInlineQuery = (client, query) => {
 			const results = [{
 				id: "1",
 				type: "article",
-				title: `${links[3].concat(query.query.slice(query.query.indexOf("furaffinity.net")+5))}`,
+				title: `${links[3].concat(query.query.slice(query.query.indexOf("furaffinity.net")+15))}`,
 				input_message_content: {
-					message_text: `${links[3].concat(query.query.slice(query.query.indexOf("furaffinity.net")+5))}`
+					message_text: `${links[3].concat(query.query.slice(query.query.indexOf("furaffinity.net")+15))}`
 				}
 			}];
 
