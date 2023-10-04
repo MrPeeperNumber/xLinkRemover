@@ -3,7 +3,6 @@ services:
   xBot:
     image: mrpeepernumber/nomorexbot:latest
     container_name: xBot
-    env_file: test.env
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
