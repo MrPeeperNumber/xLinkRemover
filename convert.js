@@ -3,7 +3,7 @@ const links = [
 	"https://twitter.com",
 	"https://vxtwitter.com",
 	"https://fxtwitter.com",
-	"https://vxfuraffinity.net"
+	"https://www.vxfuraffinity.net"
 ];
 
 // Function definition for converting messages to 

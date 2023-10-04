@@ -10,9 +10,19 @@ const msg = {
 	text: "https://x.com/Mr_Hasgaha/status/1706683674505187504?s=20"
 };
 
-const query = {
+const queryX = {
 	id: "123456789",
 	query: "https://x.com/Mr_Hasgaha/status/1706683674505187504?s=20",
+	from: {
+		id: "123456789",
+		username: "Jake Owlsky",
+	},
+
+};
+
+const queryF = {
+	id: "123456789",
+	query: "https://www.furaffinity.net/view/53911509/",
 	from: {
 		id: "123456789",
 		username: "Jake Owlsky",
@@ -40,7 +50,7 @@ test("convert messages from x.com links to the various types of links", () => {
 	expect(calledParse).toEqual({parse_mode: "MarkdownV2"});
 });
 
-test("can respond to inline queries", () => {
+test("can respond to x.com inline queries", () => {
 	let calledID = "";
 	let expectedResults = {};
 	const expectedText = "https://vxtwitter.com/Mr_Hasgaha/status/1706683674505187504?s=20";
@@ -52,7 +62,32 @@ test("can respond to inline queries", () => {
 		}
 	};
 
-	expect(() => convert.handleInlineQuery(client, query)).not.toThrow();
+	expect(() => convert.handleInlineQuery(client, queryX)).not.toThrow();
+	// expect(calledText).toEqual(text);
+	expect(calledID).toEqual("123456789");
+	expect(expectedResults).toEqual([{
+		id: "1",
+		type: "article",
+		title: expectedText,
+		input_message_content: {
+			message_text: expectedText
+		}
+	}]);
+});
+
+test("can respond to x.com inline queries", () => {
+	let calledID = "";
+	let expectedResults = {};
+	const expectedText = "https://www.vxfuraffinity.net/view/53911509/";
+
+	const client = {
+		answerInlineQuery: (id, results) => {
+			calledID = id;
+			expectedResults = results;
+		}
+	};
+
+	expect(() => convert.handleInlineQuery(client, queryF)).not.toThrow();
 	// expect(calledText).toEqual(text);
 	expect(calledID).toEqual("123456789");
 	expect(expectedResults).toEqual([{
