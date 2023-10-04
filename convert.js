@@ -24,7 +24,7 @@ const convertMessage = (client, msg) => {
 const handleInlineQuery = (client, query) => {
 	// Conditional for handling x.com or furaffinity.net links
 	// Bot will only listen for a query when it receives either of those two links
-	if(query.query.includes("x.com") || query.query.includes("furaffinity.com")) {
+	if(query.query.includes("x.com") || query.query.includes("furaffinity.net")) {
 		if(query.query.includes("x.com")) {
 			// Log inline query request, who it is from, and their user ID
 			console.log(`Inline query from ${query.from.username}: ${query.from.id}\n\tQuery Contents: ${query.query}`);
@@ -44,7 +44,7 @@ const handleInlineQuery = (client, query) => {
 		}
 		else if(query.query.includes("furaffinity.net")) {
 			// Log inline query request, who it is from, and their user ID
-			console.log(`Inline query from ${query.from.username}: ${query.from.id}\n\t${query.query}`);
+			console.log(`Inline query from ${query.from.username}: ${query.from.id}\n\tQuery contents:${query.query}`);
 
 			//Set results array to be an article object that holds the converted link for vxfuraffinity
 			const results = [{
