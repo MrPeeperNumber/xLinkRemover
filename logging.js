@@ -1,3 +1,5 @@
+const bot = require("./package.json");
+
 // Functions for console logging
 const log = (msg) => {
 	console.log({
@@ -8,7 +10,7 @@ const log = (msg) => {
 			userId: msg.from.id
 		},
 		contents: msg.text,
-		botVersion: "1.1.2-a"
+		botVersion: bot.version
 	});
 };
 
@@ -21,7 +23,7 @@ const logInChat = (msg) => {
 			userId: msg.from.id
 		},
 		contents: msg.text,
-		botVersion: "1.1.2-a"
+		botVersion: bot.version
 	});
 };
 
@@ -34,7 +36,7 @@ const logInline = (query) => {
 			userId: query.from.id
 		},
 		contents: query.query,
-		botVersion: "1.1.2-a"
+		botVersion: bot.version
 	});
 };
 
@@ -48,7 +50,7 @@ const unknownQuery = (message) => {
 				userId: message.from.id
 			},
 			contents: message.query,
-			botVersion: "1.1.2-a"
+			botVersion: bot.version
 		});
 	}
 	else if(message.text && !message.text.includes("vxtwitter.com") && !message.text.includes("vxfuraffinity.net")) {
@@ -60,7 +62,7 @@ const unknownQuery = (message) => {
 				userId: message.from.id
 			},
 			contents: message.text,
-			botVersion: "1.1.2-a"
+			botVersion: bot.version
 		});
 	}
 };
