@@ -1,3 +1,5 @@
+const logging = require("./logging.js");
+
 // Initialize array of links that will be used
 const links = [
 	"https://twitter.com",
@@ -9,7 +11,7 @@ const links = [
 // Function definition for converting messages to 
 const convertMessage = (client, msg) => {
 	// Log the function used, username, user id, and the contents
-	console.log(`Convert command from ${msg.from.username}: ${msg.from.id}\n\tMessage content: ${msg.text}`);
+	logging.logInChat(msg);
 
 	// Convert the provided x.com link into 3 different links
 	// twitter, vxtwitter, and fxtwitter links
@@ -25,10 +27,10 @@ const handleInlineQuery = (client, query) => {
 	// Conditional for handling x.com or furaffinity.net links
 	// Bot will only listen for a query when it receives either of those two links
 	if(query.query.includes("x.com") || query.query.includes("furaffinity.net")) {
-		if(query.query.includes("x.com")) {
-			// Log inline query request, who it is from, and their user ID
-			console.log(`Inline query from ${query.from.username}: ${query.from.id}\n\tQuery Contents: ${query.query}`);
+		// Log inline query request, who it is from, and their user ID
+		logging.logInline(query);
 
+		if(query.query.includes("x.com")) {
 			// Set results array to be an article object that holds the converted link for vxtwitter only
 			const results = [{
 				id: "1",
@@ -43,9 +45,6 @@ const handleInlineQuery = (client, query) => {
 			client.answerInlineQuery(query.id, results);
 		}
 		else if(query.query.includes("furaffinity.net")) {
-			// Log inline query request, who it is from, and their user ID
-			console.log(`Inline query from ${query.from.username}: ${query.from.id}\n\tQuery contents:${query.query}`);
-
 			//Set results array to be an article object that holds the converted link for vxfuraffinity
 			const results = [{
 				id: "1",
@@ -59,7 +58,7 @@ const handleInlineQuery = (client, query) => {
 			//Send the query results back to the user
 			client.answerInlineQuery(query.id, results);
 		}
-	}
+	} else logging.unknownQuery(query);
 };
 
 exports.convertMessage = convertMessage;

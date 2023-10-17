@@ -1,6 +1,6 @@
 {
   "name": "xlinkbot",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "A Telegram bot that removes the \"x\" from \"x.com\" links, and changes them to be Twitter, VxTwitter, and FxTwitter links ",
   "main": "index.js",
   "scripts": {
