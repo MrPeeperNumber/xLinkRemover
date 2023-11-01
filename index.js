@@ -1,34 +1,44 @@
 // Initialize library for using environment variables
 require("dotenv").config();
 
-// Initialize bot API library
-const CLIENT = require("node-telegram-bot-api");
 
+const CLIENT = require("node-telegram-bot-api");
 // Check for a token, otherwise, throw an error
-if(process.env.TOKEN == null || process.env.TOKEN === ""){
+if(process.env.TEST_TOKEN == null || process.env.TEST_TOKEN === ""){
 	throw new Error("Could not find Telegram token");
 }
-
-// Connect the bot client to Telegram servers
-const client = new CLIENT(process.env.TOKEN, { polling: true });
-
-// Initialize the module for logging
+const client = new CLIENT(process.env.TEST_TOKEN, { polling: true });
 const logging = require("./logging.js");
-
-// Initialize the module that holds the conversion functions
 const convert = require("./convert.js");
-
-// List of commadns that the bot can take
 const commands = [
 	"/start",
 	"/help",
 	"/info"
 ];
 
+/* Initialize a Koa server for metric tracking with Prometheus */
+const koa = require("koa");
+const server = new koa();
+const parser = require("koa-bodyparser");
+const Router = require("koa-router");
+const route = new Router();
+const prom = require("prom-client");
+const collectDefaultMetrics = prom.collectDefaultMetrics;
+const Registry = prom.Registry;
+const register = new Registry;
+const counters = require("./counters.js");
+
+
+//Middleware
+server.use(parser());
+server.use(route.routes());
+
 // When the bot client receives a message
 client.onText(/.*/, (msg) => {
 	// Check if the text includes an x.com link
 	if (msg.text.includes("x.com")) {
+		countValid();
+		console.log(counters.validQueries.hashMap[""].value);
 		// Call the message conversion funciton if it does
 		convert.convertMessage(client, msg);
 	}
@@ -37,20 +47,23 @@ client.onText(/.*/, (msg) => {
 		// Check the list of commands against the message text
 		switch(msg.text) {
 			case commands[0]:
+				countValid();
 				startCommand(msg);
 				break;
 			case commands[1]:
+				countValid();
 				helpCommand(msg);
 				break;
 			case commands[2]:
+				countValid();
 				infoCommand(msg);
 				break;
 			default: 
+				countInvalid();
 				logging.unknownQuery(msg);
 				break;
 		}
 	}
-	// If neither, do nothing
 });
 
 // Function definition for the start command
@@ -84,3 +97,22 @@ const helpCommand = (msg) => {
 client.on("inline_query", (query) => {
 	convert.handleInlineQuery(client, query);
 });
+
+/* Metrics Handling */
+route.get("/metrics", async (ctx) => {
+	ctx.body = counters.validQueries;
+});
+
+const countValid = () => {
+	counters.validQueries.inc();
+};
+
+const countInvalid = () => {
+	counters.unknownQueries.inc();
+};
+
+// server.on(eventAccess, (ctx) => meters.automark(ctx));
+// server.on(eventError, () => meters.errorRate.mark(1));
+
+// Expose port
+server.listen(4001, "localhost", () => console.log("Listening on port 4001"));

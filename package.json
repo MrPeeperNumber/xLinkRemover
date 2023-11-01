@@ -10,7 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.3.1",
-    "node-telegram-bot-api": "^0.63.0"
+    "koa": "^2.14.2",
+    "koa-bodyparser": "^4.4.1",
+    "koa-router": "^11.0.2",
+    "node-telegram-bot-api": "^0.63.0",
+    "prom-client": "^15.0.0"
   },
   "devDependencies": {
     "eslint": "^8.50.0",
