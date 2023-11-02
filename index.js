@@ -4,10 +4,10 @@ require("dotenv").config();
 
 const CLIENT = require("node-telegram-bot-api");
 // Check for a token, otherwise, throw an error
-if(process.env.TEST_TOKEN == null || process.env.TEST_TOKEN === ""){
+if(process.env.TOKEN == null || process.env.TOKEN === ""){
 	throw new Error("Could not find Telegram token");
 }
-const client = new CLIENT(process.env.TEST_TOKEN, { polling: true });
+const client = new CLIENT(process.env.TOKEN, { polling: true });
 const logging = require("./logging.js");
 const convert = require("./convert.js");
 const commands = [
